@@ -433,10 +433,10 @@ class data_transfer_full_name_args(object):
             if fid == 1:
                 if ftype == TType.LIST:
                     self.full_name = []
-                    (_etype24, _size21) = iprot.readListBegin()
-                    for _i25 in range(_size21):
-                        _elem26 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
-                        self.full_name.append(_elem26)
+                    (_etype31, _size28) = iprot.readListBegin()
+                    for _i32 in range(_size28):
+                        _elem33 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
+                        self.full_name.append(_elem33)
                     iprot.readListEnd()
                 else:
                     iprot.skip(ftype)
@@ -453,8 +453,8 @@ class data_transfer_full_name_args(object):
         if self.full_name is not None:
             oprot.writeFieldBegin('full_name', TType.LIST, 1)
             oprot.writeListBegin(TType.STRING, len(self.full_name))
-            for iter27 in self.full_name:
-                oprot.writeString(iter27.encode('utf-8') if sys.version_info[0] == 2 else iter27)
+            for iter34 in self.full_name:
+                oprot.writeString(iter34.encode('utf-8') if sys.version_info[0] == 2 else iter34)
             oprot.writeListEnd()
             oprot.writeFieldEnd()
         oprot.writeFieldStop()

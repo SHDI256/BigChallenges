@@ -65,6 +65,14 @@ class Iface(object):
         """
         pass
 
+    def data_transfer_double(self, data):
+        """
+        Parameters:
+         - data
+
+        """
+        pass
+
 
 class Client(Iface):
     def __init__(self, iprot, oprot=None):
@@ -275,6 +283,36 @@ class Client(Iface):
         iprot.readMessageEnd()
         return
 
+    def data_transfer_double(self, data):
+        """
+        Parameters:
+         - data
+
+        """
+        self.send_data_transfer_double(data)
+        self.recv_data_transfer_double()
+
+    def send_data_transfer_double(self, data):
+        self._oprot.writeMessageBegin('data_transfer_double', TMessageType.CALL, self._seqid)
+        args = data_transfer_double_args()
+        args.data = data
+        args.write(self._oprot)
+        self._oprot.writeMessageEnd()
+        self._oprot.trans.flush()
+
+    def recv_data_transfer_double(self):
+        iprot = self._iprot
+        (fname, mtype, rseqid) = iprot.readMessageBegin()
+        if mtype == TMessageType.EXCEPTION:
+            x = TApplicationException()
+            x.read(iprot)
+            iprot.readMessageEnd()
+            raise x
+        result = data_transfer_double_result()
+        result.read(iprot)
+        iprot.readMessageEnd()
+        return
+
 
 class Processor(Iface, TProcessor):
     def __init__(self, handler):
@@ -287,6 +325,7 @@ class Processor(Iface, TProcessor):
         self._processMap["request_data_transfer_double"] = Processor.process_request_data_transfer_double
         self._processMap["request_predict_transfer"] = Processor.process_request_predict_transfer
         self._processMap["data_transfer_verdict"] = Processor.process_data_transfer_verdict
+        self._processMap["data_transfer_double"] = Processor.process_data_transfer_double
         self._on_message_begin = None
 
     def on_message_begin(self, func):
@@ -466,6 +505,29 @@ class Processor(Iface, TProcessor):
             msg_type = TMessageType.EXCEPTION
             result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
         oprot.writeMessageBegin("data_transfer_verdict", msg_type, seqid)
+        result.write(oprot)
+        oprot.writeMessageEnd()
+        oprot.trans.flush()
+
+    def process_data_transfer_double(self, seqid, iprot, oprot):
+        args = data_transfer_double_args()
+        args.read(iprot)
+        iprot.readMessageEnd()
+        result = data_transfer_double_result()
+        try:
+            self._handler.data_transfer_double(args.data)
+            msg_type = TMessageType.REPLY
+        except TTransport.TTransportException:
+            raise
+        except TApplicationException as ex:
+            logging.exception('TApplication exception in handler')
+            msg_type = TMessageType.EXCEPTION
+            result = ex
+        except Exception:
+            logging.exception('Unexpected exception in handler')
+            msg_type = TMessageType.EXCEPTION
+            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+        oprot.writeMessageBegin("data_transfer_double", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
         oprot.trans.flush()
@@ -1227,6 +1289,119 @@ class data_transfer_verdict_result(object):
         return not (self == other)
 all_structs.append(data_transfer_verdict_result)
 data_transfer_verdict_result.thrift_spec = (
+)
+
+
+class data_transfer_double_args(object):
+    """
+    Attributes:
+     - data
+
+    """
+
+
+    def __init__(self, data=None,):
+        self.data = data
+
+    def read(self, iprot):
+        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+            iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
+            return
+        iprot.readStructBegin()
+        while True:
+            (fname, ftype, fid) = iprot.readFieldBegin()
+            if ftype == TType.STOP:
+                break
+            if fid == 1:
+                if ftype == TType.LIST:
+                    self.data = []
+                    (_etype24, _size21) = iprot.readListBegin()
+                    for _i25 in range(_size21):
+                        _elem26 = iprot.readDouble()
+                        self.data.append(_elem26)
+                    iprot.readListEnd()
+                else:
+                    iprot.skip(ftype)
+            else:
+                iprot.skip(ftype)
+            iprot.readFieldEnd()
+        iprot.readStructEnd()
+
+    def write(self, oprot):
+        if oprot._fast_encode is not None and self.thrift_spec is not None:
+            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            return
+        oprot.writeStructBegin('data_transfer_double_args')
+        if self.data is not None:
+            oprot.writeFieldBegin('data', TType.LIST, 1)
+            oprot.writeListBegin(TType.DOUBLE, len(self.data))
+            for iter27 in self.data:
+                oprot.writeDouble(iter27)
+            oprot.writeListEnd()
+            oprot.writeFieldEnd()
+        oprot.writeFieldStop()
+        oprot.writeStructEnd()
+
+    def validate(self):
+        return
+
+    def __repr__(self):
+        L = ['%s=%r' % (key, value)
+             for key, value in self.__dict__.items()]
+        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+
+    def __eq__(self, other):
+        return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
+
+    def __ne__(self, other):
+        return not (self == other)
+all_structs.append(data_transfer_double_args)
+data_transfer_double_args.thrift_spec = (
+    None,  # 0
+    (1, TType.LIST, 'data', (TType.DOUBLE, None, False), None, ),  # 1
+)
+
+
+class data_transfer_double_result(object):
+
+
+    def read(self, iprot):
+        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+            iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
+            return
+        iprot.readStructBegin()
+        while True:
+            (fname, ftype, fid) = iprot.readFieldBegin()
+            if ftype == TType.STOP:
+                break
+            else:
+                iprot.skip(ftype)
+            iprot.readFieldEnd()
+        iprot.readStructEnd()
+
+    def write(self, oprot):
+        if oprot._fast_encode is not None and self.thrift_spec is not None:
+            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            return
+        oprot.writeStructBegin('data_transfer_double_result')
+        oprot.writeFieldStop()
+        oprot.writeStructEnd()
+
+    def validate(self):
+        return
+
+    def __repr__(self):
+        L = ['%s=%r' % (key, value)
+             for key, value in self.__dict__.items()]
+        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+
+    def __eq__(self, other):
+        return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
+
+    def __ne__(self, other):
+        return not (self == other)
+all_structs.append(data_transfer_double_result)
+data_transfer_double_result.thrift_spec = (
 )
 fix_spec(all_structs)
 del all_structs

@@ -31,6 +31,7 @@ if len(sys.argv) <= 1 or sys.argv[1] == '--help':
     print('   request_data_transfer_double()')
     print('  void request_predict_transfer(i16 predict)')
     print('  void data_transfer_verdict(bool verdict)')
+    print('  void data_transfer_double( data)')
     print('')
     sys.exit(0)
 
@@ -151,6 +152,12 @@ elif cmd == 'data_transfer_verdict':
         print('data_transfer_verdict requires 1 args')
         sys.exit(1)
     pp.pprint(client.data_transfer_verdict(eval(args[0]),))
+
+elif cmd == 'data_transfer_double':
+    if len(args) != 1:
+        print('data_transfer_double requires 1 args')
+        sys.exit(1)
+    pp.pprint(client.data_transfer_double(eval(args[0]),))
 
 else:
     print('Unrecognized method %s' % cmd)

@@ -5,7 +5,8 @@ service DataTransfer {
     binary request_image_transfer(),
     list <double> request_data_transfer_double(),
     void request_predict_transfer(1:i16 predict),
-    void data_transfer_verdict(1: bool verdict)
+    void data_transfer_verdict(1: bool verdict),
+    void data_transfer_double(1:list <double> data)
 }
 
 service DataRegistration {
