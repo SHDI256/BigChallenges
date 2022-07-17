@@ -112,7 +112,8 @@ class MainWindow(QMainWindow):
         # for i in generator():
         #     self.file = i
         #     break
-        cv2.imshow('You are', cv2.cvtColor(self.file, cv2.COLOR_BGR2RGB))
+        # cv2.imshow('You are', cv2.cvtColor(self.file, cv2.COLOR_BGR2RGB))
+        # print(self.file.shape)
         self.signup()
 
     def signup(self):
