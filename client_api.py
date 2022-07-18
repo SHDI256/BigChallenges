@@ -53,3 +53,9 @@ class Registration:
 
     def data_transfer_age(self, age):
         self.client.data_transfer_age(age)
+
+    def data_transfer_int(self, data):
+        self.client.data_transfer_int(data)
+
+    def data_transfer_double(self, data):
+        self.client.data_transfer_double(data)

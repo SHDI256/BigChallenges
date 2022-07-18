@@ -28,6 +28,8 @@ if len(sys.argv) <= 1 or sys.argv[1] == '--help':
     print('  void data_transfer_full_name( full_name)')
     print('  void data_transfer_sex(bool sex)')
     print('  void data_transfer_age(i16 age)')
+    print('  void data_transfer_int( data)')
+    print('  void data_transfer_double( data)')
     print('')
     sys.exit(0)
 
@@ -130,6 +132,18 @@ elif cmd == 'data_transfer_age':
         print('data_transfer_age requires 1 args')
         sys.exit(1)
     pp.pprint(client.data_transfer_age(eval(args[0]),))
+
+elif cmd == 'data_transfer_int':
+    if len(args) != 1:
+        print('data_transfer_int requires 1 args')
+        sys.exit(1)
+    pp.pprint(client.data_transfer_int(eval(args[0]),))
+
+elif cmd == 'data_transfer_double':
+    if len(args) != 1:
+        print('data_transfer_double requires 1 args')
+        sys.exit(1)
+    pp.pprint(client.data_transfer_double(eval(args[0]),))
 
 else:
     print('Unrecognized method %s' % cmd)
